@@ -1,0 +1,162 @@
+// StuProfile.scss
+.profile-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-title {
+    font-size: 2rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+  
+      label {
+        font-weight: bold;
+        color: #555;
+      }
+  
+      input {
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+  
+        &:focus {
+          border-color: #3498db;
+          outline: none;
+        }
+      }
+  
+      .error-message {
+        color: #e74c3c;
+        font-size: 0.875rem;
+      }
+    }
+  
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+  
+      button {
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+  
+        &.save-button {
+          background-color: #3498db;
+          color: #fff;
+  
+          &:hover {
+            background-color: #2980b9;
+          }
+        }
+  
+        &.cancel-button {
+          background-color: #e74c3c;
+          color: #fff;
+  
+          &:hover {
+            background-color: #c0392b;
+          }
+        }
+      }
+    }
+  }
+  
+  .profile-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  
+    .detail-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+  
+      label {
+        font-weight: bold;
+        color: #555;
+      }
+  
+      p {
+        margin: 0;
+        color: #333;
+      }
+    }
+  
+    .edit-button {
+      padding: 0.5rem 1rem;
+      background-color: #2ecc71;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+  
+      &:hover {
+        background-color: #27ae60;
+      }
+    }
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+    color: #333;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .loading {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  // Responsive Design
+  @media (max-width: 768px) {
+    .profile-container {
+      padding: 1rem;
+    }
+  
+    .profile-title {
+      font-size: 1.75rem;
+    }
+  
+    .section-title {
+      font-size: 1.25rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .profile-container {
+      padding: 0.5rem;
+    }
+  
+    .profile-title {
+      font-size: 1.5rem;
+    }
+  
+    .section-title {
+      font-size: 1rem;
+    }
+  }

@@ -1,0 +1,35 @@
+.institute-dashboard {
+    margin-left: 250px; // Adjust for sidebar width
+    padding: 20px;
+  
+    h1 {
+      margin-bottom: 20px;
+      font-size: 2rem;
+      color: #2c3e50;
+    }
+  
+    .institute-details {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      max-width: 600px;
+  
+      h2 {
+        margin-bottom: 15px;
+        font-size: 1.5rem;
+        color: #34495e;
+      }
+  
+      p {
+        margin: 8px 0;
+        font-size: 1rem;
+        color: #2c3e50;
+  
+        strong {
+          color: #34495e;
+        }
+      }
+    }
+  }

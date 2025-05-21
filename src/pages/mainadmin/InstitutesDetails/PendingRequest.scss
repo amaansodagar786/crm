@@ -1,0 +1,137 @@
+.pending-request {
+  margin-left: 250px; // Adjust for sidebar width
+  padding: 20px;
+
+  h1 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: #2c3e50;
+  }
+
+  .pending-users-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    .pending-user-card {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 300px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      h2 {
+        margin-bottom: 15px;
+        font-size: 1.5rem;
+        color: #34495e;
+      }
+
+      p {
+        margin: 8px 0;
+        font-size: 1rem;
+        color: #2c3e50;
+
+        strong {
+          color: #34495e;
+        }
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+
+        .accept-button {
+          background-color: #28a745; // Green for accept
+          color: white;
+          border: none;
+          border-radius: 5px;
+          padding: 10px 20px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+
+          &:hover {
+            background-color: #218838;
+          }
+        }
+
+        .reject-button {
+          background-color: #dc3545; // Red for reject
+          color: white;
+          border: none;
+          border-radius: 5px;
+          padding: 10px 20px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+
+          &:hover {
+            background-color: #c82333;
+          }
+        }
+      }
+    }
+
+    .no-pending-users {
+      text-align: center;
+      font-size: 1.2rem;
+      color: #777;
+    }
+  }
+}
+
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-spinner {
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #3498db;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
+
+.accept-button,
+.reject-button {
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .pending-request {
+    margin-left: 0; // Remove margin for mobile view
+    padding: 10px;
+
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    .pending-users-container {
+      justify-content: center;
+
+      .pending-user-card {
+        width: 100%; // Full width on mobile
+        max-width: 400px; // Limit max width for better readability
+      }
+    }
+  }
+}

@@ -1,0 +1,257 @@
+.timetable-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+
+  h1 {
+    font-size: 2.5rem;
+    color: #007bff;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    color: #007bff;
+    margin: 20px 0 15px;
+  }
+
+  .form-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+      color: #495057;
+    }
+
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ced4da;
+      border-radius: 8px;
+      font-size: 1rem;
+      margin-bottom: 15px;
+      background-color: white;
+    }
+  }
+
+  .days-selection {
+    margin: 30px 0;
+
+    .day-buttons {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+
+      .day-button {
+        padding: 12px;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        background-color: #f8f9fa;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.3s;
+
+        &:hover {
+          background-color: #e9ecef;
+        }
+
+        &.active {
+          background-color: #007bff;
+          color: white;
+          border-color: #007bff;
+        }
+
+        &.configured {
+          background-color: #28a745;
+          color: white;
+          border-color: #28a745;
+        }
+
+        .checkmark {
+          position: absolute;
+          top: 2px;
+          right: 5px;
+          font-size: 0.8rem;
+        }
+      }
+    }
+  }
+
+  .day-configuration {
+    margin: 30px 0;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+
+    .day-type {
+      margin-bottom: 20px;
+
+      select {
+        width: 200px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ced4da;
+      }
+    }
+
+    .subjects-list {
+      margin-bottom: 20px;
+
+      .subject-item {
+        padding: 15px;
+        margin-bottom: 15px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+        h4 {
+          margin-top: 0;
+          color: #6c757d;
+        }
+
+        label {
+          display: block;
+          margin: 10px 0 5px;
+          font-size: 0.9rem;
+          color: #495057;
+        }
+
+        select, input {
+          width: 100%;
+          padding: 8px;
+          border: 1px solid #ced4da;
+          border-radius: 4px;
+          margin-bottom: 10px;
+        }
+
+        .time-inputs {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
+          margin-top: 10px;
+        }
+
+        .remove-btn {
+          margin-top: 10px;
+          padding: 5px 10px;
+          background-color: #dc3545;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          font-size: 0.8rem;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+
+      button {
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 0.9rem;
+
+        &:first-child {
+          background-color: #28a745;
+          color: white;
+        }
+
+        &:nth-child(2) {
+          background-color: #ffc107;
+          color: #212529;
+        }
+
+        &:last-child {
+          background-color: #007bff;
+          color: white;
+        }
+      }
+    }
+
+    .holiday-message {
+      padding: 15px;
+      background-color: #fff3cd;
+      border-radius: 5px;
+      color: #856404;
+      margin-bottom: 20px;
+
+      button {
+        margin-top: 10px;
+        padding: 8px 15px;
+        background-color: #17a2b8;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .submit-section {
+    text-align: center;
+    margin-top: 30px;
+
+    .submit-btn {
+      padding: 12px 30px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #218838;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .timetable-container {
+    padding: 15px;
+
+    .days-selection .day-buttons {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .form-section, .day-configuration {
+      padding: 15px;
+    }
+
+    .action-buttons {
+      flex-direction: column;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .timetable-container {
+    .days-selection .day-buttons {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+    }
+  }
+}

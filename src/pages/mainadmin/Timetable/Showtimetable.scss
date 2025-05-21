@@ -1,0 +1,235 @@
+.showtimetable-container {
+  padding: 20px;
+  max-width: 100%;
+  overflow-x: auto;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 0 10px;
+
+    h1 {
+      color: #007bff;
+      margin: 0;
+    }
+
+    .create-btn {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #218838;
+      }
+    }
+  }
+
+  .no-timetables {
+    text-align: center;
+    padding: 40px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+
+    .create-btn {
+      margin-top: 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #0069d9;
+      }
+    }
+  }
+
+  .timetables-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .timetable-table {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+
+    .timetable-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+
+      h2 {
+        margin: 0;
+        font-size: 1.4rem;
+      }
+
+      .actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+
+        button {
+          padding: 5px 10px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 0.9rem;
+          transition: opacity 0.3s;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          &:hover {
+            opacity: 0.9;
+          }
+        }
+
+        .edit-btn {
+          background-color: #ffc107;
+          color: #212529;
+        }
+
+        .delete-btn {
+          background-color: #dc3545;
+          color: white;
+        }
+
+        .expand-btn {
+          background: none;
+          color: white;
+          font-size: 1.2rem;
+          padding: 0;
+          width: 30px;
+          height: 30px;
+        }
+      }
+    }
+
+    .table-container {
+      overflow-x: auto;
+      padding: 10px;
+      max-height: 500px;
+      transition: max-height 0.3s ease;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 800px;
+
+      th, td {
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #dee2e6;
+      }
+
+      th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+        position: sticky;
+        top: 0;
+      }
+
+      .time-slot {
+        background-color: #f8f9fa;
+        font-weight: 500;
+        white-space: nowrap;
+      }
+
+      .day-cell {
+        &.holiday {
+          background-color: #fff3cd;
+          color: #856404;
+        }
+
+        &.none {
+          background-color: #f8f9fa;
+          color: #6c757d;
+        }
+
+        &.break {
+          background-color: #e2e3e5;
+          color: #383d41;
+        }
+
+        .holiday, .no-class, .free {
+          font-size: 0.9rem;
+          font-style: italic;
+        }
+
+        .subject-info {
+          .subject-name {
+            font-weight: 500;
+            margin-bottom: 5px;
+          }
+
+          .teacher {
+            font-size: 0.8rem;
+            color: #6c757d;
+          }
+        }
+      }
+    }
+  }
+
+  .loading {
+    text-align: center;
+    padding: 40px;
+    font-size: 1.2rem;
+    color: #6c757d;
+  }
+}
+
+// Responsive styles
+@media (max-width: 992px) {
+  .showtimetable-container {
+    padding: 10px;
+
+    .timetable-table {
+      .timetable-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+
+        .actions {
+          align-self: flex-end;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .showtimetable-container {
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .timetable-table {
+      .timetable-header {
+        .actions {
+          align-self: stretch;
+          justify-content: flex-end;
+        }
+      }
+    }
+  }
+}
