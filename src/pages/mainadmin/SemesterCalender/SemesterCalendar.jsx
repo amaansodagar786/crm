@@ -1,4 +1,3 @@
-// 📁 File: src/components/SemesterCalendar.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -12,16 +11,17 @@ const SemesterCalendar = () => {
   const [publicHolidays, setPublicHolidays] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [selectedDay, setSelectedDay] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [holidayName, setHolidayName] = useState("");
+  const [holidayType, setHolidayType] = useState("custom_holiday");
 
   // Set default dates to current semester if not provided
   useEffect(() => {
     const today = new Date();
     const currentYear = today.getFullYear();
-
-    // Default to Jan-Jun semester
     const defaultStart = `${currentYear}-01-01`;
     const defaultEnd = `${currentYear}-06-30`;
-
     setStartDate(defaultStart);
     setEndDate(defaultEnd);
   }, []);
@@ -33,11 +33,11 @@ const SemesterCalendar = () => {
     }
   }, [startDate, endDate]);
 
-  // Fetch public holidays for the selected period
+  // Fetch public holidays
   const fetchPublicHolidays = async () => {
     try {
       const res = await axios.get(
-        `/api/calendar/holidays?start=${startDate}&end=${endDate}`
+        `http://localhost:5000/calendar/holidays?start=${startDate}&end=${endDate}`
       );
       setPublicHolidays(res.data);
     } catch (error) {
@@ -50,36 +50,26 @@ const SemesterCalendar = () => {
   const generateCalendar = async () => {
     setIsLoading(true);
     setMessage("");
-
     try {
-      // First try to load existing calendar
       const res = await axios.get(
         `http://localhost:5000/calendar/${instituteId}/load?semesterStart=${startDate}&semesterEnd=${endDate}`
       );
-
-      if (res.data) {
+      if (res.data.calendar && res.data.calendar.length > 0) {
         setCalendarData(res.data.calendar);
         setMessage("Loaded existing calendar");
       } else {
-        // If no existing calendar, generate a new one
         await fetchPublicHolidays();
         createNewCalendar();
       }
     } catch (error) {
-      if (error.response && error.response.status === 404) {
-        // No existing calendar found - create new
-        await fetchPublicHolidays();
-        createNewCalendar();
-      } else {
-        console.error("Error loading calendar", error);
-        setMessage("Failed to load calendar");
-      }
+      console.error("Error loading calendar", error);
+      setMessage("Failed to load calendar");
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Create new calendar from scratch
+  // Create new calendar
   const createNewCalendar = () => {
     const start = new Date(startDate);
     const end = new Date(endDate);
@@ -87,18 +77,14 @@ const SemesterCalendar = () => {
     let current = new Date(start);
 
     while (current <= end) {
-      const dateStr = current.toISOString().split("T")[0];
+      const dateStr = current.toISOString().split('T')[0];
       const isWeekend = current.getDay() === 0 || current.getDay() === 6;
       const holiday = publicHolidays.find((h) => h.date === dateStr);
 
       dates.push({
         date: dateStr,
-        type: holiday
-          ? "public_holiday"
-          : isWeekend
-            ? "weekend"
-            : "working_day",
-        name: holiday ? holiday.name : "",
+        type: holiday ? 'public_holiday' : isWeekend ? 'weekend' : 'working_day',
+        name: holiday ? holiday.name : ''
       });
 
       current.setDate(current.getDate() + 1);
@@ -108,34 +94,59 @@ const SemesterCalendar = () => {
     setMessage("Generated new calendar");
   };
 
-  // Toggle day between working day and custom holiday
-  const toggleCustomHoliday = (date) => {
+  // Handle day click - open modal
+  const handleDayClick = (dateObj) => {
+    // Don't allow editing public holidays
+    if (dateObj.type === "public_holiday") return;
+    
+    setSelectedDay(dateObj);
+    setHolidayName(dateObj.name || "");
+    setHolidayType(dateObj.type === "custom_holiday" ? "custom_holiday" : "custom_holiday");
+    setModalOpen(true);
+  };
+
+  // Save holiday from modal
+  const saveHoliday = () => {
     setCalendarData((prev) =>
-      prev.map((d) =>
-        d.date === date.date
-          ? {
+      prev.map((d) => {
+        if (d.date !== selectedDay.date) return d;
+        
+        // If name is empty, treat as working day
+        if (!holidayName.trim()) {
+          return {
             ...d,
-            type: d.type === "custom_holiday"
-              ? (d.name ? "public_holiday" : "working_day")
-              : "custom_holiday",
-            name: d.type === "custom_holiday"
-              ? (d.name ? d.name : "")
-              : "Institute Holiday",
-          }
-          : d
-      )
+            type: "working_day",
+            name: ""
+          };
+        }
+        
+        return {
+          ...d,
+          type: holidayType,
+          name: holidayName.trim()
+        };
+      })
     );
+    setModalOpen(false);
   };
 
   // Save calendar to backend
   const saveCalendar = async () => {
     setIsLoading(true);
     try {
-      await axios.post(`http://localhost:5000/calendar/${instituteId}/save`, {
-        semesterStart: startDate,
-        semesterEnd: endDate,
-        calendar: calendarData,
-      });
+      await axios.post(
+        `http://localhost:5000/calendar/${instituteId}/save`,
+        {
+          semesterStart: startDate,
+          semesterEnd: endDate,
+          calendar: calendarData
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
       setMessage("Calendar saved successfully");
     } catch (error) {
       console.error("Error saving calendar", error);
@@ -166,7 +177,6 @@ const SemesterCalendar = () => {
             const dayOfMonth = date.getDate();
             const dayOfWeek = date.getDay();
 
-            // Add empty cells for days before the first day of the month
             if (dayOfMonth === 1) {
               const emptyCells = [];
               for (let i = 0; i < dayOfWeek; i++) {
@@ -177,7 +187,7 @@ const SemesterCalendar = () => {
                   key={dateObj.date}
                   className={`day ${dateObj.type}`}
                   title={dateObj.name}
-                  onClick={() => toggleCustomHoliday(dateObj)}
+                  onClick={() => handleDayClick(dateObj)}
                 >
                   {dayOfMonth}
                   {dateObj.name && <span className="holiday-name">{dateObj.name}</span>}
@@ -190,7 +200,7 @@ const SemesterCalendar = () => {
                 key={dateObj.date}
                 className={`day ${dateObj.type}`}
                 title={dateObj.name}
-                onClick={() => toggleCustomHoliday(dateObj)}
+                onClick={() => handleDayClick(dateObj)}
               >
                 {dayOfMonth}
                 {dateObj.name && <span className="holiday-name">{dateObj.name}</span>}
@@ -204,12 +214,11 @@ const SemesterCalendar = () => {
 
   // Group dates by month
   const groupedByMonth = (calendarData || []).reduce((acc, dateObj) => {
-    const month = dateObj.date.slice(0, 7); // YYYY-MM
+    const month = dateObj.date.slice(0, 7);
     if (!acc[month]) acc[month] = [];
     acc[month].push(dateObj);
     return acc;
   }, {});
-
 
   return (
     <div className="semester-calendar">
@@ -276,6 +285,40 @@ const SemesterCalendar = () => {
           </div>
         )}
       </div>
+
+      {/* Holiday Modal */}
+      {modalOpen && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h3>Add Holiday</h3>
+            <div className="modal-content">
+              <div className="form-group">
+                <label>Holiday Name:</label>
+                <input
+                  type="text"
+                  value={holidayName}
+                  onChange={(e) => setHolidayName(e.target.value)}
+                  placeholder="Enter holiday name"
+                />
+              </div>
+              <div className="form-group">
+                <label>Holiday Type:</label>
+                <select
+                  value={holidayType}
+                  onChange={(e) => setHolidayType(e.target.value)}
+                >
+                  <option value="custom_holiday">Institute Holiday</option>
+                  <option value="working_day">Working Day</option>
+                </select>
+              </div>
+            </div>
+            <div className="modal-actions">
+              <button onClick={() => setModalOpen(false)}>Cancel</button>
+              <button onClick={saveHoliday}>Save</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
