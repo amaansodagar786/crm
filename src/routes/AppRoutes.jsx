@@ -21,6 +21,9 @@ import StudentDashboard from "../pages/student/StudentDashboard/StudentDashboard
 import StudentTimetable from "../pages/student/StudentTimetable/StudentTimetable";
 import TeacherTimetable from "../pages/teacher/TecherTimetable/TeacherTimetable";
 import SemesterCalendar from "../pages/mainadmin/SemesterCalender/SemesterCalendar";
+import StudentAcademic from "../pages/student/StudentAcedemic/StudentAcedemic";
+import TeacherAcademic from "../pages/teacher/TeacherAcedemic/TeacherAcademic";
+import ManageFaculties from "../pages/mainadmin/Management/ManageFaculties";
 
 const AppRoutes = () => {
   const location = useLocation();
@@ -53,6 +56,7 @@ const AppRoutes = () => {
         <Route path="/mainadmin/addclass/:instituteId" element={<AddClass />} />
         <Route path="/mainadmin/showclass/:instituteId" element={<ShowClasses />} />
         <Route path="/mainadmin/calendar/:instituteId" element={<SemesterCalendar />} />
+        <Route path="/mainadmin/manage/:instituteId" element={<ManageFaculties />} />
 
         {/* Main Admin Manage Routes */}
         <Route path="/mainadmin/adddetails/:instituteId" element={<AddStuDetails />} />
@@ -64,10 +68,12 @@ const AppRoutes = () => {
         {/*  Student Routes */}
         <Route path="/student/profile" element={<StuProfile />} />
         <Route path="/student/timetable" element={<StudentTimetable />} />
+        <Route path="/student/academic" element={<StudentAcademic />} />
 
 
         {/*  Teachers Routes */}
         <Route path="/teacher/timetable" element={<TeacherTimetable />} />
+        <Route path="/teacher/academic" element={<TeacherAcademic />} />
         {/* <Route path="/student/timetable" element={<StudentTimetable />} /> */}
       </Routes>
     </>

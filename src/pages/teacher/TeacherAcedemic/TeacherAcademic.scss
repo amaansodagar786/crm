@@ -1,0 +1,21 @@
+// Add this to your existing styles or create a new file
+.student-academic-page {
+  display: flex;
+  min-height: 100vh;
+  
+  .student-academic-content {
+    flex: 1;
+    padding: 2rem;
+    background-color: #f5f7fa;
+  }
+}
+
+@media (max-width: 768px) {
+  .student-academic-page {
+    flex-direction: column;
+    
+    .student-academic-content {
+      padding: 1rem;
+    }
+  }
+}

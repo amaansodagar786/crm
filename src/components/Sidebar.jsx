@@ -48,6 +48,8 @@ const Sidebar = () => {
             <button onClick={() => navigate('/teacher/my-classes')}>My Classes</button>
             <button onClick={() => navigate('/teacher/assignments')}>Assignments</button>
             <button onClick={() => navigate('/teacher/timetable')}>TimeTable</button>
+            <button onClick={() => navigate('/teacher/academic')}>Academic</button>
+
           </>
         );
       case 'student':
@@ -58,6 +60,7 @@ const Sidebar = () => {
             <button onClick={() => navigate('/student/assignments')}>Assignments</button>
             <button onClick={() => navigate('/student/grades')}>Grades</button>
             <button onClick={() => navigate('/student/timetable')}>Timetable</button>
+            <button onClick={() => navigate('/student/academic')}>Academic</button>
           </>
         );
       default:

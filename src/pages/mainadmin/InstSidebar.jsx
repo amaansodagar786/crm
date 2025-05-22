@@ -37,11 +37,15 @@ const InstSidebar = () => {
           <button onClick={() => handleNavigation(`/mainadmin/institute/dashboard/${instituteId}`)}>
             Dashboard
           </button>
-          
+
           <button onClick={() => handleNavigation(`/mainadmin/pendingrequest/${instituteId}`)}>
             Pending Requests
           </button>
-          
+
+          <button onClick={() => handleNavigation(`/mainadmin/manage/${instituteId}`)}>
+            Manage Teachers
+          </button>
+
           <button onClick={toggleClasses}>Classes</button>
           {showClasses && (
             <div className="nested-buttons">
@@ -53,7 +57,7 @@ const InstSidebar = () => {
               </button>
             </div>
           )}
-          
+
           <button onClick={toggleManageStudents}>Manage Students</button>
           {showManageStudents && (
             <div className="nested-buttons">
@@ -65,7 +69,7 @@ const InstSidebar = () => {
               </button>
             </div>
           )}
-          
+
           <button onClick={toggleTimetable}>Timetable</button>
           {showTimetable && (
             <div className="nested-buttons">
@@ -77,7 +81,7 @@ const InstSidebar = () => {
               </button>
             </div>
           )}
-          
+
           <button onClick={toggleCalendar}>Academic Calendar</button>
           {showCalendar && (
             <div className="nested-buttons">
@@ -89,6 +93,8 @@ const InstSidebar = () => {
               </button>
             </div>
           )}
+
+
         </div>
       </div>
     </div>

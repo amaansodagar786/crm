@@ -16,6 +16,8 @@ const SemesterCalendar = () => {
   const [holidayName, setHolidayName] = useState("");
   const [holidayType, setHolidayType] = useState("custom_holiday");
 
+
+
   // Set default dates to current semester if not provided
   useEffect(() => {
     const today = new Date();
@@ -39,25 +41,36 @@ const SemesterCalendar = () => {
       const res = await axios.get(
         `http://localhost:5000/calendar/holidays?start=${startDate}&end=${endDate}`
       );
+      console.log('Fetched public holidays:', res.data); // Add logging
       setPublicHolidays(res.data);
     } catch (error) {
-      console.error("Error fetching public holidays", error);
+      console.error("Error fetching public holidays", error.response?.data || error.message);
       setMessage("Failed to fetch public holidays");
     }
   };
+
+
+  useEffect(() => {
+    if (publicHolidays.length > 0 && calendarData.length === 0) {
+      createNewCalendar();
+    }
+  }, [publicHolidays]);
 
   // Generate calendar data structure
   const generateCalendar = async () => {
     setIsLoading(true);
     setMessage("");
     try {
+      // First try to load existing calendar
       const res = await axios.get(
         `http://localhost:5000/calendar/${instituteId}/load?semesterStart=${startDate}&semesterEnd=${endDate}`
       );
+
       if (res.data.calendar && res.data.calendar.length > 0) {
         setCalendarData(res.data.calendar);
         setMessage("Loaded existing calendar");
       } else {
+        // Only fetch public holidays if no existing calendar
         await fetchPublicHolidays();
         createNewCalendar();
       }
@@ -69,6 +82,7 @@ const SemesterCalendar = () => {
     }
   };
 
+
   // Create new calendar
   const createNewCalendar = () => {
     const start = new Date(startDate);
@@ -76,16 +90,29 @@ const SemesterCalendar = () => {
     const dates = [];
     let current = new Date(start);
 
+    // Merge with existing calendar data if any
+    const existingDates = calendarData.filter(d =>
+      new Date(d.date) >= start && new Date(d.date) <= end
+    );
+
     while (current <= end) {
       const dateStr = current.toISOString().split('T')[0];
-      const isWeekend = current.getDay() === 0 || current.getDay() === 6;
-      const holiday = publicHolidays.find((h) => h.date === dateStr);
 
-      dates.push({
-        date: dateStr,
-        type: holiday ? 'public_holiday' : isWeekend ? 'weekend' : 'working_day',
-        name: holiday ? holiday.name : ''
-      });
+      // Check if date exists in existing data
+      const existingDate = existingDates.find(d => d.date === dateStr);
+
+      if (existingDate) {
+        dates.push(existingDate);
+      } else {
+        const isWeekend = current.getDay() === 0 || current.getDay() === 6;
+        const holiday = publicHolidays.find((h) => h.date === dateStr);
+
+        dates.push({
+          date: dateStr,
+          type: holiday ? 'public_holiday' : isWeekend ? 'weekend' : 'working_day',
+          name: holiday ? holiday.name : ''
+        });
+      }
 
       current.setDate(current.getDate() + 1);
     }
@@ -96,12 +123,13 @@ const SemesterCalendar = () => {
 
   // Handle day click - open modal
   const handleDayClick = (dateObj) => {
-    // Don't allow editing public holidays
-    if (dateObj.type === "public_holiday") return;
-    
+    // Remove this restriction
+    // if (dateObj.type === "public_holiday") return;
+
     setSelectedDay(dateObj);
     setHolidayName(dateObj.name || "");
-    setHolidayType(dateObj.type === "custom_holiday" ? "custom_holiday" : "custom_holiday");
+    // Set current type or default to custom_holiday
+    setHolidayType(dateObj.type === "working_day" ? "working_day" : "custom_holiday");
     setModalOpen(true);
   };
 
@@ -110,7 +138,7 @@ const SemesterCalendar = () => {
     setCalendarData((prev) =>
       prev.map((d) => {
         if (d.date !== selectedDay.date) return d;
-        
+
         // If name is empty, treat as working day
         if (!holidayName.trim()) {
           return {
@@ -119,7 +147,7 @@ const SemesterCalendar = () => {
             name: ""
           };
         }
-        
+
         return {
           ...d,
           type: holidayType,
@@ -130,15 +158,21 @@ const SemesterCalendar = () => {
     setModalOpen(false);
   };
 
-  // Save calendar to backend
+
+  // Updated saveCalendar function
   const saveCalendar = async () => {
     setIsLoading(true);
     try {
+      // Get the full date range from the calendar data
+      const dates = calendarData.map(d => new Date(d.date));
+      const minDate = new Date(Math.min(...dates)).toISOString().split('T')[0];
+      const maxDate = new Date(Math.max(...dates)).toISOString().split('T')[0];
+
       await axios.post(
         `http://localhost:5000/calendar/${instituteId}/save`,
         {
-          semesterStart: startDate,
-          semesterEnd: endDate,
+          semesterStart: minDate,
+          semesterEnd: maxDate,
           calendar: calendarData
         },
         {
