@@ -36,9 +36,7 @@ const Sidebar = () => {
         return (
           <>
             <button onClick={() => navigate('/admin/dashboard')}>Dashboard</button>
-            <button onClick={() => navigate('/admin/manage-students')}>Manage Students</button>
-            <button onClick={() => navigate('/admin/manage-teachers')}>Manage Teachers</button>
-            <button onClick={() => navigate('/admin/settings')}>Settings</button>
+            <button onClick={() => navigate('/admin/leave')}>Leave Module</button>
           </>
         );
       case 'teacher':
@@ -49,6 +47,7 @@ const Sidebar = () => {
             <button onClick={() => navigate('/teacher/assignments')}>Assignments</button>
             <button onClick={() => navigate('/teacher/timetable')}>TimeTable</button>
             <button onClick={() => navigate('/teacher/academic')}>Academic</button>
+            <button onClick={() => navigate('/teacher/leave')}>Leave Module</button>
 
           </>
         );

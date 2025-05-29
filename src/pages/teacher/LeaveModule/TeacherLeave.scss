@@ -1,0 +1,331 @@
+// 📁 File: src/pages/Teacher/Leave/TeacherLeave.scss
+.teacher-leave-container {
+  margin-left: 250px;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+
+  h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+  }
+}
+
+.leave-balance-container {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+  h3 {
+    margin-top: 0;
+    color: #2c3e50;
+  }
+
+  .balance-cards {
+    display: flex;
+    gap: 15px;
+    margin: 15px 0;
+  }
+
+  .balance-card {
+    background: #fff;
+    border-radius: 6px;
+    padding: 10px 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 100px;
+
+    .leave-type {
+      font-weight: bold;
+      color: #3498db;
+    }
+
+    .leave-count {
+      color: #27ae60;
+      font-size: 1.1em;
+    }
+  }
+
+  .salary-info {
+    font-size: 1.1em;
+    color: #e67e22;
+    font-weight: bold;
+  }
+}
+
+.leave-form-container {
+  display: flex;
+  gap: 30px;
+
+  .calendar-section {
+    flex: 2;
+  }
+
+  .leave-details-section {
+    flex: 1;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    height: fit-content;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+    h3 {
+      margin-top: 0;
+      color: #2c3e50;
+    }
+  }
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+
+  h3 {
+    margin: 0;
+    color: #2c3e50;
+  }
+
+  .month-navigation {
+    display: flex;
+    gap: 10px;
+
+    button {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s;
+
+      &:hover {
+        background: #2980b9;
+      }
+
+      &:disabled {
+        background: #bdc3c7;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+.calendar-grid {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.day-header-row {
+  display: flex;
+  background: #3498db;
+  color: white;
+  font-weight: bold;
+
+  .day-header {
+    flex: 1;
+    text-align: center;
+    padding: 8px 0;
+  }
+}
+
+.week-row {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.day-cell {
+  flex: 1;
+  min-height: 60px;
+  padding: 5px;
+  border-right: 1px solid #ddd;
+  position: relative;
+
+  &:last-child {
+    border-right: none;
+  }
+
+  &.weekend {
+    background: #f5f5f5;
+    color: #999;
+  }
+
+  &.public_holiday, &.custom_holiday {
+    background: #ffecec;
+    color: #e74c3c;
+  }
+
+  &.selectable {
+    cursor: pointer;
+
+    &:hover {
+      background: #eaf4fd;
+    }
+  }
+
+  &.selected {
+    background: #d4edff;
+    border: 2px solid #3498db;
+  }
+
+  .day-number {
+    font-weight: bold;
+    font-size: 0.9em;
+  }
+
+  .holiday-label {
+    font-size: 0.7em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .selected-marker {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    color: #27ae60;
+    font-weight: bold;
+  }
+}
+
+.empty {
+  background: #f9f9f9;
+}
+
+.selected-dates {
+  margin: 15px 0;
+  padding: 10px;
+  background: #fff;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+
+  h4 {
+    margin-top: 0;
+  }
+
+  ul {
+    padding-left: 20px;
+    margin: 5px 0;
+  }
+}
+
+.form-group {
+  margin-bottom: 15px;
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  select, textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: inherit;
+
+    &:focus {
+      outline: none;
+      border-color: #3498db;
+      box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+    }
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+}
+
+.submit-btn {
+  background: #27ae60;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s;
+  width: 100%;
+
+  &:hover {
+    background: #219653;
+  }
+
+  &:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+  }
+}
+
+.message {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 4px;
+
+  &.error {
+    background: #fdecea;
+    color: #e74c3c;
+    border: 1px solid #e74c3c;
+  }
+
+  &.success {
+    background: #e8f5e9;
+    color: #27ae60;
+    border: 1px solid #27ae60;
+  }
+}
+
+@media (max-width: 992px) {
+  .leave-form-container {
+    flex-direction: column;
+  }
+}
+
+// Add these new styles to your existing TeacherLeave.scss
+
+.balance-card {
+  &.academic {
+    background: #e3f2fd;
+    .leave-type {
+      color: #1976d2;
+    }
+  }
+}
+
+.leave-info-note {
+  font-size: 0.85em;
+  color: #1976d2;
+  margin-top: 5px;
+  padding: 5px;
+  background: #e3f2fd;
+  border-radius: 4px;
+}
+
+.leave-warning-note {
+  font-size: 0.85em;
+  color: #d32f2f;
+  margin-top: 5px;
+  padding: 5px;
+  background: #ffebee;
+  border-radius: 4px;
+}
+
+// Keep all existing styles and add responsive styles as needed

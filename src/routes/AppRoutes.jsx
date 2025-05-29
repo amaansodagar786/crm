@@ -24,6 +24,9 @@ import SemesterCalendar from "../pages/mainadmin/SemesterCalender/SemesterCalend
 import StudentAcademic from "../pages/student/StudentAcedemic/StudentAcedemic";
 import TeacherAcademic from "../pages/teacher/TeacherAcedemic/TeacherAcademic";
 import ManageFaculties from "../pages/mainadmin/Management/ManageFaculties";
+import TeacherLeave from "../pages/teacher/LeaveModule/TeacherLeave";
+import LeaveAccept from "../pages/mainadmin/LeaveAccept/LeaveAccept";
+import AdminLeave from "../pages/admin/AdminLeave/AdminLeave";
 
 const AppRoutes = () => {
   const location = useLocation();
@@ -57,6 +60,7 @@ const AppRoutes = () => {
         <Route path="/mainadmin/showclass/:instituteId" element={<ShowClasses />} />
         <Route path="/mainadmin/calendar/:instituteId" element={<SemesterCalendar />} />
         <Route path="/mainadmin/manage/:instituteId" element={<ManageFaculties />} />
+        <Route path="/mainadmin/leave-management/:instituteId" element={<LeaveAccept />} />
 
         {/* Main Admin Manage Routes */}
         <Route path="/mainadmin/adddetails/:instituteId" element={<AddStuDetails />} />
@@ -74,7 +78,11 @@ const AppRoutes = () => {
         {/*  Teachers Routes */}
         <Route path="/teacher/timetable" element={<TeacherTimetable />} />
         <Route path="/teacher/academic" element={<TeacherAcademic />} />
-        {/* <Route path="/student/timetable" element={<StudentTimetable />} /> */}
+        <Route path="/teacher/leave" element={<TeacherLeave />} />
+
+
+        {/*  Admin Routes */}
+        <Route path="/admin/leave" element={<AdminLeave />} />
       </Routes>
     </>
   );

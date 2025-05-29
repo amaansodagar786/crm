@@ -1,44 +1,89 @@
+// 📁 File: src/components/InstSidebar.scss
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
 .inst-sidebar {
+  font-family: 'Poppins', sans-serif;
   position: fixed;
   top: 0;
-  left: 0; // Always visible by default
-  width: 250px;
+  left: -260px;
+  width: 260px;
   height: 100vh;
-  background-color: #2c3e50;
-  transition: left 0.3s ease;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  color: white;
+  transition: left 0.4s ease-in-out;
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.2);
   z-index: 1000;
+  overflow-y: auto;
+  padding-top: 60px;
+
+  &.open {
+    left: 0;
+  }
 
   .hamburger {
-    display: none; // Hide hamburger by default
+    position: absolute;
+    top: 20px;
+    right: -50px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    background-color: #2c3e50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    transition: all 0.3s ease-in-out;
+
+    .line {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      margin: 4px 0;
+      transition: 0.4s;
+    }
+
+    &.open .top {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    &.open .middle {
+      opacity: 0;
+    }
+
+    &.open .bottom {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
   }
 
   .sidebar-content {
     padding: 20px;
-    color: white;
 
     h2 {
-      margin-bottom: 20px;
-      font-size: 1.5rem;
       text-align: center;
+      font-weight: 600;
+      margin-bottom: 20px;
+      font-size: 1.8rem;
     }
 
     .buttons {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
 
       button {
-        padding: 10px;
-        background-color: #34495e;
-        color: white;
+        background: rgba(255, 255, 255, 0.1);
         border: none;
-        border-radius: 5px;
-        cursor: pointer;
+        padding: 12px 15px;
+        border-radius: 8px;
+        color: white;
+        font-size: 1rem;
         text-align: left;
-        transition: background-color 0.3s ease;
+        transition: all 0.3s ease;
+        cursor: pointer;
 
         &:hover {
-          background-color: #1abc9c;
+          background: #16a085;
+          transform: translateX(5px);
         }
       }
 
@@ -47,12 +92,14 @@
         flex-direction: column;
         gap: 10px;
         margin-left: 20px;
-        margin-top: 10px;
+        margin-top: 5px;
+        animation: expand 0.3s ease-in-out;
 
         button {
-          background-color: #2ecc71;
+          background-color: #27ae60;
+
           &:hover {
-            background-color: #27ae60;
+            background-color: #219150;
           }
         }
       }
@@ -60,31 +107,27 @@
   }
 }
 
-// Responsive Design (Optional for smaller screens)
+// Smooth open animation
+@keyframes expand {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Responsive design
 @media (max-width: 768px) {
   .inst-sidebar {
-    left: -250px; // Hide sidebar by default on smaller screens
-
     &.open {
-      left: 0; // Show sidebar when open
+      width: 100%;
     }
 
     .hamburger {
-      display: block; // Show hamburger on smaller screens
-      position: absolute;
-      top: 20px;
-      right: -50px;
-      cursor: pointer;
-      padding: 10px;
-      background-color: #34495e;
-      border-radius: 5px;
-
-      .line {
-        width: 25px;
-        height: 3px;
-        background-color: white;
-        margin: 5px 0;
-      }
+      right: 10px;
     }
   }
 }

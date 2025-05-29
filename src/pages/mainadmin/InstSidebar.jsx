@@ -1,4 +1,3 @@
-// 📁 File: src/components/InstSidebar.jsx
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import './InstSidebar.scss';
@@ -34,67 +33,43 @@ const InstSidebar = () => {
       <div className="sidebar-content">
         <h2>Institute Menu</h2>
         <div className="buttons">
-          <button onClick={() => handleNavigation(`/mainadmin/institute/dashboard/${instituteId}`)}>
-            Dashboard
-          </button>
-
-          <button onClick={() => handleNavigation(`/mainadmin/pendingrequest/${instituteId}`)}>
-            Pending Requests
-          </button>
-
-          <button onClick={() => handleNavigation(`/mainadmin/manage/${instituteId}`)}>
-            Manage Teachers
-          </button>
+          <button onClick={() => handleNavigation(`/mainadmin/institute/dashboard/${instituteId}`)}>Dashboard</button>
+          <button onClick={() => handleNavigation(`/mainadmin/pendingrequest/${instituteId}`)}>Pending Requests</button>
+          <button onClick={() => handleNavigation(`/mainadmin/manage/${instituteId}`)}>Manage Teachers</button>
 
           <button onClick={toggleClasses}>Classes</button>
           {showClasses && (
             <div className="nested-buttons">
-              <button onClick={() => handleNavigation(`/mainadmin/addclass/${instituteId}`)}>
-                Add Class
-              </button>
-              <button onClick={() => handleNavigation(`/mainadmin/showclass/${instituteId}`)}>
-                Show Classes
-              </button>
+              <button onClick={() => handleNavigation(`/mainadmin/addclass/${instituteId}`)}>Add Class</button>
+              <button onClick={() => handleNavigation(`/mainadmin/showclass/${instituteId}`)}>Show Classes</button>
             </div>
           )}
 
           <button onClick={toggleManageStudents}>Manage Students</button>
           {showManageStudents && (
             <div className="nested-buttons">
-              <button onClick={() => handleNavigation(`/mainadmin/adddetails/${instituteId}`)}>
-                Add Details
-              </button>
-              <button onClick={() => handleNavigation(`/mainadmin/student-details/${instituteId}`)}>
-                Details
-              </button>
+              <button onClick={() => handleNavigation(`/mainadmin/adddetails/${instituteId}`)}>Add Details</button>
+              <button onClick={() => handleNavigation(`/mainadmin/student-details/${instituteId}`)}>Details</button>
             </div>
           )}
 
           <button onClick={toggleTimetable}>Timetable</button>
           {showTimetable && (
             <div className="nested-buttons">
-              <button onClick={() => handleNavigation(`/mainadmin/timetable/${instituteId}`)}>
-                Add Timetable
-              </button>
-              <button onClick={() => handleNavigation(`/mainadmin/showtimetable/${instituteId}`)}>
-                Show Timetable
-              </button>
+              <button onClick={() => handleNavigation(`/mainadmin/timetable/${instituteId}`)}>Add Timetable</button>
+              <button onClick={() => handleNavigation(`/mainadmin/showtimetable/${instituteId}`)}>Show Timetable</button>
             </div>
           )}
 
           <button onClick={toggleCalendar}>Academic Calendar</button>
           {showCalendar && (
             <div className="nested-buttons">
-              <button onClick={() => handleNavigation(`/mainadmin/calendar/${instituteId}`)}>
-                Manage Calendar
-              </button>
-              <button onClick={() => handleNavigation(`/mainadmin/view-calendar/${instituteId}`)}>
-                View Calendar
-              </button>
+              <button onClick={() => handleNavigation(`/mainadmin/calendar/${instituteId}`)}>Manage Calendar</button>
+              <button onClick={() => handleNavigation(`/mainadmin/view-calendar/${instituteId}`)}>View Calendar</button>
             </div>
           )}
 
-
+          <button onClick={() => handleNavigation(`/mainadmin/leave-management/${instituteId}`)}>Manage Leaves</button>
         </div>
       </div>
     </div>
